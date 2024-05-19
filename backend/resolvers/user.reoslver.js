@@ -43,18 +43,23 @@ const userResolver = {
         await context.login(newUser);
         return newUser;
       } catch (error) {
-        console.log("Error in signup", err);
+        console.log("Error in signup", error);
         throw new Error(error.message);
       }
     },
     login: async (_, { input }, context) => {
+      // console.log(args);
       try {
         const { username, password } = input;
-        await context.authenticate("graphql-local", { username, password });
+        const { user } = await context.authenticate("graphql-local", {
+          username,
+          password,
+        });
+        // console.log(user);
         await context.login(user);
         return user;
       } catch (error) {
-        console.log("Error in login", err);
+        console.log("Error in login", error);
         throw new Error(error.message);
       }
     },

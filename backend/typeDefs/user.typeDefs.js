@@ -15,13 +15,13 @@ type Query {
 }
 type Mutation {
     signup(input:SignUpInput!):User
-    login(userId:LoginInput!):User
+    login(input:LoginInput!):User
     logout:LogoutResponse
 }
 # input types are specifically designed to be used as arguments in mutations 
 # and therefore only define fields that can be accepted as inputs
 input SignUpInput {
-    userName:String!
+    username:String!
     name:String!
     password:String!
     gender:String!

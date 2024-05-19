@@ -2,7 +2,7 @@ import Transaction from "../models/transaction.model.js";
 
 const transactionResolver = {
   Query: {
-    transactions: async (_, _, context) => {
+    transactions: async (_, args, context) => {
       try {
         if (!context.getUser()) throw new Error("Unauthorized");
         const userId = context.getUser()._id;
@@ -14,7 +14,7 @@ const transactionResolver = {
         throw new Error(error.message);
       }
     },
-    transcation: async (_, { transactionId }) => {
+    transaction: async (_, { transactionId }) => {
       try {
         const transaction = await Transaction.findById(transactionId);
         return transaction;
@@ -38,7 +38,7 @@ const transactionResolver = {
         throw new Error("Error creating transaction");
       }
     },
-    udpateTransaction: async (_, { input }, context) => {
+    updateTransaction: async (_, { input }, context) => {
       try {
         const updateTransaction = await Transaction.findByIdAndUpdate(
           input.transactionId,

@@ -15,9 +15,9 @@ import { connectDB } from "./db/connectDb.js";
 import { configurePassport } from "./passport/passport.config.js";
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
-
 configDotenv();
 configurePassport();
+// console.log("Starting", process.env.MONGO_URI);
 // Required logic for integrating with Express
 const app = express();
 // Our httpServer handles incoming requests to our Express app.
@@ -37,8 +37,8 @@ mongoStore.on("error", function (err) {
 app.use(
   session({
     secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: true,
+    resave: false, // this option specifies whether to save the session to the store on every request
+    saveUninitialized: false, // option specifies whether to save uninitialized sessions
     store: mongoStore,
     cookie: {
       maxAge: 1000 * 60 * 24 * 24 * 7,
@@ -81,7 +81,6 @@ const server = new ApolloServer({
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 // Ensure we wait for our server to start
-await connectDB();
 await server.start();
 
 // Set up our Express middleware to handle CORS, body parsing,
@@ -89,14 +88,14 @@ await server.start();
 app.use(
   "/",
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
     credentials: true,
   }),
   express.json(),
   // expressMiddleware accepts the same arguments:
   // an Apollo Server instance and optional configuration options
   expressMiddleware(server, {
-    context: async ({ req }) => buildContext({ req, res }),
+    context: async ({ req, res }) => buildContext({ req, res }),
   })
 );
 
@@ -107,5 +106,6 @@ app.use(
 // const { url } = await startStandaloneServer(server, {
 //   listen: { port: 4000 },
 // });
+await connectDB();
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
 console.log(`🚀  Server ready at  port ${httpServer.address().port}`);
