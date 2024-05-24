@@ -12,15 +12,12 @@ import { buildContext } from "graphql-passport";
 import http from "http";
 import passport from "passport";
 import path from "path";
-import { fileURLToPath } from "url";
 import { connectDB } from "./db/connectDb.js";
 import { configurePassport } from "./passport/passport.config.js";
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const rootPath = path.join(__dirname, "..");
+const __dirname = path.resolve();
 
 configDotenv();
 configurePassport();
@@ -114,9 +111,9 @@ app.use(
 //   listen: { port: 4000 },
 // });
 //Npm run build will build your frontend app, and it will be optimized
-app.use(express.static(path.join(rootPath, "frontend/dist")));
+app.use(express.static(path.join(__dirname, "frontend/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(rootPath, "frontend/dist", "index.html"));
+  res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
 });
 await connectDB();
 await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
