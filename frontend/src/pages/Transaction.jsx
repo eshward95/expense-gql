@@ -1,18 +1,55 @@
-import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import TransactionFormSkeleton from "../components/TransactionFormSkeleton";
+import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
+import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
 
 const Transaction = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { loading, data } = useQuery(GET_TRANSACTION, {
+    variables: { id: id },
+  });
+  console.log(data);
+
+  const [updateTransaction, { loading: loadingUpdate }] = useMutation(
+    UPDATE_TRANSACTION,
+    {
+      // https://github.com/apollographql/apollo-client/issues/5419 => refetchQueries is not working, and here is how we fixed it
+      // refetchQueries: [{ query: GET_TRANSACTION_STATISTICS }],
+    }
+  );
+
   const [formData, setFormData] = useState({
-    description: "",
-    paymentType: "",
-    category: "",
-    amount: "",
-    location: "",
-    date: "",
+    description: data?.transaction?.description || "",
+    paymentType: data?.transaction?.paymentType || "",
+    category: data?.transaction?.category || "",
+    amount: data?.transaction?.amount || "",
+    location: data?.transaction?.location || "",
+    date: data?.transaction?.date || "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("formData", formData);
+    const amount = parseFloat(formData.amount); // convert amount to number bc by default it is string
+    // and the reason it's coming from an input field
+    try {
+      await updateTransaction({
+        variables: {
+          input: {
+            ...formData,
+            amount,
+            transactionId: id,
+          },
+        },
+      });
+      toast.success("Transaction updated successfully");
+      navigate("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +59,22 @@ const Transaction = () => {
     }));
   };
 
-  //   if (loading) return <TransactionFormSkeleton />;
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        description: data?.transaction?.description,
+        paymentType: data?.transaction?.paymentType,
+        category: data?.transaction?.category,
+        amount: data?.transaction?.amount,
+        location: data?.transaction?.location,
+        date:
+          data?.transaction?.date &&
+          new Date(+data?.transaction?.date).toISOString().substring(0, 10),
+      });
+    }
+  }, [data]);
+
+  if (loading) return <TransactionFormSkeleton />;
 
   return (
     <div className="h-screen max-w-4xl mx-auto flex flex-col items-center">
