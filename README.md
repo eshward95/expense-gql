@@ -28,11 +28,11 @@ npm install npm@latest -g
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/eshward95/expense-gql.git
    ```
 2. Navigate to the project directory
    ```sh
-   cd Project-Name
+   cd expense-gql
    ```
 3. Install NPM packages
    ```sh
