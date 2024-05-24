@@ -4,7 +4,7 @@ export let users = [
     username: "user1",
     name: "Alice Smith",
     password: "password1",
-    profilePic: "https://placeimg.com/64/64/people/1",
+    profilePicture: "https://placeimg.com/64/64/people/1",
     gender: "Female",
   },
   {
@@ -12,7 +12,7 @@ export let users = [
     username: "user2",
     name: "Bob Johnson",
     password: "password2",
-    profilePic: "https://placeimg.com/64/64/people/2",
+    profilePicture: "https://placeimg.com/64/64/people/2",
     gender: "Male",
   },
   {
@@ -20,7 +20,7 @@ export let users = [
     username: "user3",
     name: "Charlie Brown",
     password: "password3",
-    profilePic: "https://placeimg.com/64/64/people/3",
+    profilePicture: "https://placeimg.com/64/64/people/3",
     gender: "Male",
   },
   {
@@ -28,7 +28,7 @@ export let users = [
     username: "user4",
     name: "Daisy Adams",
     password: "password4",
-    profilePic: "https://placeimg.com/64/64/people/4",
+    profilePicture: "https://placeimg.com/64/64/people/4",
     gender: "Female",
   },
   {
@@ -36,7 +36,7 @@ export let users = [
     username: "user5",
     name: "Evan Rogers",
     password: "password5",
-    profilePic: "https://placeimg.com/64/64/people/5",
+    profilePicture: "https://placeimg.com/64/64/people/5",
     gender: "Male",
   },
   {
@@ -44,7 +44,7 @@ export let users = [
     username: "user6",
     name: "Fiona Graham",
     password: "password6",
-    profilePic: "https://placeimg.com/64/64/people/6",
+    profilePicture: "https://placeimg.com/64/64/people/6",
     gender: "Female",
   },
   {
@@ -52,7 +52,7 @@ export let users = [
     username: "user7",
     name: "George King",
     password: "password7",
-    profilePic: "https://placeimg.com/64/64/people/7",
+    profilePicture: "https://placeimg.com/64/64/people/7",
     gender: "Male",
   },
   {
@@ -60,7 +60,7 @@ export let users = [
     username: "user8",
     name: "Hannah Scott",
     password: "password8",
-    profilePic: "https://placeimg.com/64/64/people/8",
+    profilePicture: "https://placeimg.com/64/64/people/8",
     gender: "Female",
   },
   {
@@ -68,7 +68,7 @@ export let users = [
     username: "user9",
     name: "Ivan Lee",
     password: "password9",
-    profilePic: "https://placeimg.com/64/64/people/9",
+    profilePicture: "https://placeimg.com/64/64/people/9",
     gender: "Male",
   },
   {
@@ -76,7 +76,7 @@ export let users = [
     username: "user10",
     name: "Julia Davis",
     password: "password10",
-    profilePic: "https://placeimg.com/64/64/people/10",
+    profilePicture: "https://placeimg.com/64/64/people/10",
     gender: "Female",
   },
 ];

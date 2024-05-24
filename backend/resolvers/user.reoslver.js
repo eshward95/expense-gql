@@ -30,14 +30,15 @@ const userResolver = {
         if (existingUser) throw new Error(`User ${username} already exists`);
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        let genderType = gender === "male" ? "boy" : "gir";
-        let profilePic = `https://avatar.iran.liara.run/public/${genderType}?username=${username}`;
+        let genderType = gender === "male" ? "boy" : "girl";
+        console.log(genderType);
+        let profilePicture = `https://avatar.iran.liara.run/public/${genderType}?username=${username}`;
         const newUser = new User({
           username,
           password: hashedPassword,
           gender,
           name,
-          profilePicture: profilePic,
+          profilePicture: profilePicture,
         });
         await newUser.save();
         await context.login(newUser);
@@ -55,7 +56,7 @@ const userResolver = {
           username,
           password,
         });
-        // console.log(user);
+        console.log(user);
         await context.login(user);
         return user;
       } catch (error) {

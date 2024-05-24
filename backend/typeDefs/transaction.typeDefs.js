@@ -7,11 +7,17 @@ type Transaction {
     category:String!,
     amount:Float!,
     location:String!
-    data:String!
+    date:String!
+    user:User!
 }
 type Query {
     transactions:[Transaction!],
     transaction(transactionId:ID!):Transaction
+    categoryStatistics:[CategoryStatistics!]
+}
+type CategoryStatistics {
+    category:String!,
+    total:Float!
 }
 type Mutation {
     createTransaction(input:CreateTransactionInput!):Transaction!
@@ -20,16 +26,16 @@ type Mutation {
 }
 input CreateTransactionInput {
     description:String!
-    payementType:String!
+    paymentType:String!
     category:String!
     amount:Float!
     date:String!
     location:String
 }
 input UpdateTransactionInput {
-    transactionID:ID!
+    transactionId:ID!
     description:String!
-    payementType:String!
+    paymentType:String!
     category:String!
     amount:Float!
     date:String!
